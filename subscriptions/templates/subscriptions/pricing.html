@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
+{% block title %}Pricing Plans{% endblock %}
 
 {% block content %}
-  <h2>Pricing Page</h2>
-  <p>This will list subscription plans.</p>
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Choose Your Plan</h2>
+  <div class="row">
+    {% for plan in plans %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h4 class="card-title">{{ plan.name }}</h4>
+            <h5 class="card-subtitle text-muted">{{ plan.billing_cycle|capfirst }}</h5>
+            <p class="card-text mt-2"><strong>${{ plan.price }}</strong> / {{ plan.billing_cycle }}</p>
+            <ul class="mt-3">
+              {% for key, value in plan.features.items %}
+                <li>{{ key }}</li>
+              {% endfor %}
+            </ul>
+            <a href="#" class="btn btn-primary mt-3">Subscribe</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
