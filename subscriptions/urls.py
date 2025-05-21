@@ -5,4 +5,5 @@ app_name = 'subscriptions'
 
 urlpatterns = [
     path('', views.subscriptions_home, name='subscriptions-home'),
+    path('pricing/', views.pricing_view, name='pricing'),
 ]
