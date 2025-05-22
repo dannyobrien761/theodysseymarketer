@@ -10,4 +10,3 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
 class SubscriptionAdmin(admin.ModelAdmin):
     list_display = ('user', 'plan', 'status', 'start_date', 'end_date')
     list_filter = ('status',)
-

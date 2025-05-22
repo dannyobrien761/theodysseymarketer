@@ -17,7 +17,7 @@
                 <li>{{ key }}</li>
               {% endfor %}
             </ul>
-            <a href="#" class="btn btn-primary mt-3">Subscribe</a>
+            <a href="{% url 'subscriptions:checkout' plan.id %}" class="btn btn-success mt-3">Subscribe</a>
           </div>
         </div>
       </div>
