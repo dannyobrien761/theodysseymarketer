@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import SubscriptionPlan
 import stripe
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -14,7 +15,7 @@ def pricing_view(request):
     plans = SubscriptionPlan.objects.all()
     return render(request, 'subscriptions/pricing.html', {'plans': plans})
 
-
+@login_required
 def create_checkout_session(request, plan_id):
     plan = get_object_or_404(SubscriptionPlan, id=plan_id)
 
