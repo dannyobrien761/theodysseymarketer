@@ -24,16 +24,3 @@ def register_and_subscribe(request, plan_id):
         form = RegistrationForm()
 
     return render(request, 'accounts/register_and_subscribe.html', {'form': form})
-
-
-def account_home(request):
-    return HttpResponse("User profile page")
-    
-def register_view(request):
-    return HttpResponse("Register page")
-
-def login_view(request):
-    return HttpResponse("Logged in")
-
-def logout_view(request):
-    return HttpResponse("Logged out")
