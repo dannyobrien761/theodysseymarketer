@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block extra_title %}Login{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="mb-4 text-center">Login to Your Account</h2>
+
+          <form method="post" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary w-100 mt-3">Log In</button>
+          </form>
+
+          <hr class="my-4">
+
+          <p class="text-center mb-0">
+            Don’t have an account?
+            <a href="{% url 'account_signup' %}">Register here</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
