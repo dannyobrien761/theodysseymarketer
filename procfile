@@ -1,1 +1,1 @@
-web: gunicorn the_odyssey_marketer.wsgi
+web: gunicorn marketing_agency.wsgi 
