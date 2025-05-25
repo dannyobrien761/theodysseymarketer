@@ -50,11 +50,10 @@ def stripe_webhook(request):
 
     payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
-    webhook_secret = settings.STRIPE_WEBHOOK_SECRET
 
     try:
         event = stripe.Webhook.construct_event(
-            payload, sig_header, webhook_secret
+            payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
         )
     except (ValueError, stripe.error.SignatureVerificationError):
         return HttpResponse(status=400)
@@ -62,75 +61,24 @@ def stripe_webhook(request):
     event_type = event['type']
     data = event['data']['object']
 
-    print(f" Received event: {event_type}")
-
-    # New subscription via Checkout
     if event_type == 'checkout.session.completed':
-        email = data.get('customer_email')
         stripe_sub_id = data.get('subscription')
-        price_id = None
+        customer_email = data.get('customer_email')
 
-        # Get the price ID from the session line items
-        line_items = stripe.checkout.Session.list_line_items(data['id'])
-        if line_items['data']:
-            price_id = line_items['data'][0]['price']['id']
+        subscription = Subscription.objects.filter(stripe_subscription_id=stripe_sub_id).first()
 
-        user = User.objects.filter(email=email).first()
-        plan = SubscriptionPlan.objects.filter(stripe_price_id=price_id).first()
+        if subscription:
+            subscription.status = 'active'
+            subscription.save()
+            print(f" Subscription activated for {customer_email}")
 
-        if user and plan and stripe_sub_id:
-            Subscription.objects.update_or_create(
-                user=user,
-                defaults={
-                    'plan': plan,
-                    'stripe_subscription_id': stripe_sub_id,
-                    'status': 'active',
-                }
-            )
-            print(" Subscription created for:", user.email)
-
-    # Invoice Paid (for recurring renewals)
-    elif event_type == 'invoice.paid':
-        stripe_sub_id = data.get('subscription')
-        sub = Subscription.objects.filter(stripe_subscription_id=stripe_sub_id).first()
-        if sub:
-            sub.status = 'active'
-            sub.save()
-            print(" Subscription renewed:", sub.user.email)
-
-    #  Invoice Payment Failed
     elif event_type == 'invoice.payment_failed':
         stripe_sub_id = data.get('subscription')
-        sub = Subscription.objects.filter(stripe_subscription_id=stripe_sub_id).first()
-        if sub:
-            sub.status = 'payment_failed'
-            sub.save()
-            print(" Payment failed for:", sub.user.email)
+        subscription = Subscription.objects.filter(stripe_subscription_id=stripe_sub_id).first()
 
-    # Subscription Cancelled
-    elif event_type == 'customer.subscription.deleted':
-        stripe_sub_id = data.get('id')
-        sub = Subscription.objects.filter(stripe_subscription_id=stripe_sub_id).first()
-        if sub:
-            sub.status = 'cancelled'
-            sub.save()
-            print(" Subscription cancelled for:", sub.user.email)
-
-    #  Subscription Updated (e.g. plan change)
-    elif event_type == 'customer.subscription.updated':
-        stripe_sub_id = data.get('id')
-        sub = Subscription.objects.filter(stripe_subscription_id=stripe_sub_id).first()
-
-        if sub:
-            # Optional: update plan if changed
-            items = data.get('items', {}).get('data', [])
-            if items:
-                price_id = items[0]['price']['id']
-                plan = SubscriptionPlan.objects.filter(stripe_price_id=price_id).first()
-                if plan:
-                    sub.plan = plan
-            sub.status = data.get('status', sub.status)
-            sub.save()
-            print(" Subscription updated:", sub.user.email)
+        if subscription:
+            subscription.status = 'payment_failed'
+            subscription.save()
+            print(f" Payment failed for {subscription.user.email}")
 
     return HttpResponse(status=200)

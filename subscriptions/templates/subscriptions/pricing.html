@@ -20,7 +20,7 @@
             {% if user.is_authenticated %}
             <a href="{% url 'subscriptions:checkout' plan.id %}" class="btn btn-success">Subscribe</a>
             {% else %}
-            <a href="{% url 'accounts:register' plan.id %}" class="btn btn-primary">Join & Subscribe</a>
+            <a href="{% url 'account_signup' %}?plan={{ plan.id }}" class="btn btn-primary">Join & Subscribe</a>
             {% endif %}
           </div>
         </div>
