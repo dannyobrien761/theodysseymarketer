@@ -1,5 +1,6 @@
 from allauth.account.adapter import DefaultAccountAdapter
 from django.shortcuts import redirect
+from django.urls import reverse
 
 
 class MyAccountAdapter(DefaultAccountAdapter):
@@ -11,4 +12,4 @@ class MyAccountAdapter(DefaultAccountAdapter):
         if plan_id:
             return f'/subscriptions/checkout/{plan_id}/'
         #  If no plan was provided, send back to pricing page
-        return '/pricing/?error=must-select-plan'
+        return reverse('subscriptions:pricing') + '?error=must-select-plan'
