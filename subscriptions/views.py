@@ -17,6 +17,10 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def subscriptions_home(request):
     return HttpResponse("Subscriptions app is working!")
 
+@login_required
+def subscription_success(request):
+    return render(request, 'subscriptions/success.html')
+
 
 
 def pricing_view(request):
@@ -36,7 +40,7 @@ def create_checkout_session(request, plan_id):
             'price': plan.stripe_price_id,
             'quantity': 1,
         }],
-        success_url=request.build_absolute_uri('/dashboard/') + '?success=true',
+        success_url = request.build_absolute_uri('/subscriptions/success/') + '?success=true'
         cancel_url=request.build_absolute_uri('/subscriptions/pricing/'),
     )
 
@@ -46,10 +50,9 @@ def create_checkout_session(request, plan_id):
 
 @csrf_exempt
 def stripe_webhook(request):
-    """Handle Stripe Webhooks for subscription billing"""
-
     payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
+    event = None
 
     try:
         event = stripe.Webhook.construct_event(
@@ -61,19 +64,21 @@ def stripe_webhook(request):
     event_type = event['type']
     data = event['data']['object']
 
-    if event['type'] == 'checkout.session.completed':
-        data = event['data']['object']
+    if event_type == 'checkout.session.completed':
         stripe_sub_id = data.get('subscription')
         customer_email = data.get('customer_email')
 
         user = User.objects.filter(email=customer_email).first()
 
         if user and stripe_sub_id:
-            Subscription.objects.get_or_create(
+            # Always update or create the local subscription record
+            sub, created = Subscription.objects.get_or_create(
                 user=user,
-                stripe_subscription_id=stripe_sub_id,
-                defaults={'status': 'active'}
+                stripe_subscription_id=stripe_sub_id
             )
+            sub.status = 'active'
+            sub.save()
+            print(f" Subscription {sub.id} set to active for {user.email}")
 
     elif event_type == 'invoice.payment_failed':
         stripe_sub_id = data.get('subscription')
@@ -83,6 +88,5 @@ def stripe_webhook(request):
             subscription.status = 'payment_failed'
             subscription.save()
             print(f" Payment failed for {subscription.user.email}")
-
 
     return HttpResponse(status=200)
