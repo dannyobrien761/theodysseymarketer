@@ -8,27 +8,13 @@ from django.contrib import messages
 
 
 @login_required
+@login_required
 def dashboard_home(request):
     subscription = Subscription.objects.filter(user=request.user, status='active').first()
-    if not subscription:
-        try:
-            stripe_subs = stripe.Subscription.list(limit=1, customer_email=request.user.email)
-            if stripe_subs.data:
-                stripe_sub = stripe_subs.data[0]
-                if stripe_sub['status'] == 'active':
-                    # Update or create local record on the fly
-                    sub, created = Subscription.objects.get_or_create(
-                        user=request.user,
-                        stripe_subscription_id=stripe_sub['id']
-                    )
-                    sub.status = 'active'
-                    sub.save()
-                    subscription = sub
-        except Exception as e:
-            print(f" Stripe lookup failed: {e}")
-    
+
     if not subscription:
         return redirect('subscriptions:pricing')
+
     return render(request, 'dashboard/home.html', {'subscription': subscription})
 
 

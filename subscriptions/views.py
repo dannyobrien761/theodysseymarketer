@@ -40,7 +40,7 @@ def create_checkout_session(request, plan_id):
             'price': plan.stripe_price_id,
             'quantity': 1,
         }],
-        success_url = request.build_absolute_uri('/subscriptions/success/') + '?success=true'
+        success_url = request.build_absolute_uri('/subscriptions/success/') + '?success=true',
         cancel_url=request.build_absolute_uri('/subscriptions/pricing/'),
     )
 
