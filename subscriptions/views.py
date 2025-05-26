@@ -61,16 +61,19 @@ def stripe_webhook(request):
     event_type = event['type']
     data = event['data']['object']
 
-    if event_type == 'checkout.session.completed':
+    if event['type'] == 'checkout.session.completed':
+        data = event['data']['object']
         stripe_sub_id = data.get('subscription')
         customer_email = data.get('customer_email')
 
-        subscription = Subscription.objects.filter(stripe_subscription_id=stripe_sub_id).first()
+        user = User.objects.filter(email=customer_email).first()
 
-        if subscription:
-            subscription.status = 'active'
-            subscription.save()
-            print(f" Subscription activated for {customer_email}")
+        if user and stripe_sub_id:
+            Subscription.objects.get_or_create(
+                user=user,
+                stripe_subscription_id=stripe_sub_id,
+                defaults={'status': 'active'}
+            )
 
     elif event_type == 'invoice.payment_failed':
         stripe_sub_id = data.get('subscription')
@@ -80,5 +83,6 @@ def stripe_webhook(request):
             subscription.status = 'payment_failed'
             subscription.save()
             print(f" Payment failed for {subscription.user.email}")
+
 
     return HttpResponse(status=200)

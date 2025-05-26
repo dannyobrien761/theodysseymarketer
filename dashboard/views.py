@@ -27,4 +27,4 @@ def cancel_subscription(request):
             messages.success(request, "Your subscription has been cancelled.")
         except Exception as e:
             messages.error(request, "Something went wrong while cancelling.")
-    return redirect('dashboard:home')
+    return redirect('dashboard:dashboard-home')
