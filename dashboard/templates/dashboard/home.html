@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block extra_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Welcome, {{ user.first_name|default:user.username }}</h2>
+
+  {% if subscription %}
+    <div class="card mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Your Plan: {{ subscription.plan.name }}</h5>
+        <p>Status: <strong>{{ subscription.status }}</strong></p>
+        <p>Stripe Subscription ID: {{ subscription.stripe_subscription_id }}</p>
+
+        <a href="{% url 'dashboard:cancel' %}" class="btn btn-danger">Cancel Subscription</a>
+      </div>
+    </div>
+  {% else %}
+    <p>You don’t have an active subscription.</p>
+    <a href="{% url 'subscriptions:pricing' %}" class="btn btn-primary">View Plans</a>
+  {% endif %}
+</div>
+{% endblock %}
