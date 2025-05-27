@@ -116,7 +116,7 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 
 WSGI_APPLICATION = 'marketing_agency.wsgi.application'
 # Handle Plan Data Through Signup
-ACCOUNT_ADAPTER = 'accounts.adapters.MyAccountAdapter'
+# ACCOUNT_ADAPTER = 'accounts.adapters.MyAccountAdapter'
 
 
 # Database

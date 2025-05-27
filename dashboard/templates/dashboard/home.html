@@ -8,11 +8,28 @@
   {% if subscription %}
     <div class="card mt-4">
       <div class="card-body">
-        <h5 class="card-title">Your Plan: {{ subscription.plan.name }}</h5>
-        <p>Status: <strong>{{ subscription.status }}</strong></p>
-        <p>Stripe Subscription ID: {{ subscription.stripe_subscription_id }}</p>
+        <h5 class="card-title">Your Plan: {{ plan_name|default:"Unknown Plan" }}</h5>
+        <p>Status: 
+         {% if subscription.status == 'active' %}
+          <span class="badge badge-success">Active</span>
+         {% elif subscription.status == 'canceled' %}
+          <span class="badge badge-warning">Canceled (ends {{ end_date|default:"unknown" }})</span>
+         {% elif subscription.status == 'expired' %}
+          <span class="badge badge-secondary">Expired</span>
+         {% endif %}
+      </p>
 
+      {% if subscription.status == 'active' %}
+        <p>✅ Your subscription is active.</p>
         <a href="{% url 'dashboard:cancel' %}" class="btn btn-danger">Cancel Subscription</a>
+      {% elif subscription.status == 'canceled' %}
+        <p>❌ You’ve canceled; your subscription will remain active until <strong>{{ end_date|default:"unknown" }}</strong>.</p>
+      {% elif subscription.status == 'expired' %}
+        <p>💬 Your subscription has ended. <a href="{% url 'subscriptions:pricing' %}">Renew now</a>.</p>
+      {% endif %}
+
+      <hr>
+      <p>Stripe Subscription ID: {{ subscription.stripe_subscription_id }}</p>
       </div>
     </div>
   {% else %}

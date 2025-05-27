@@ -52,7 +52,6 @@ def create_checkout_session(request, plan_id):
 def stripe_webhook(request):
     payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
-    event = None
 
     try:
         event = stripe.Webhook.construct_event(
@@ -69,24 +68,44 @@ def stripe_webhook(request):
         customer_email = data.get('customer_email')
 
         user = User.objects.filter(email=customer_email).first()
-
         if user and stripe_sub_id:
-            # Always update or create the local subscription record
-            sub, created = Subscription.objects.get_or_create(
+            # Retrieve Stripe subscription to get the price ID
+            stripe_sub = stripe.Subscription.retrieve(stripe_sub_id)
+            price_id = stripe_sub['items']['data'][0]['price']['id']
+
+            # Match local plan
+            plan = SubscriptionPlan.objects.filter(stripe_price_id=price_id).first()
+
+            # Update or create local subscription record
+            Subscription.objects.update_or_create(
                 user=user,
-                stripe_subscription_id=stripe_sub_id
+                stripe_subscription_id=stripe_sub_id,
+                defaults={
+                    'status': 'active',
+                    'plan': plan
+                }
             )
-            sub.status = 'active'
-            sub.save()
-            print(f" Subscription {sub.id} set to active for {user.email}")
 
-    elif event_type == 'invoice.payment_failed':
-        stripe_sub_id = data.get('subscription')
+    elif event_type == 'customer.subscription.updated':
+        stripe_sub_id = data.get('id')
+        cancel_at_period_end = data.get('cancel_at_period_end')
+        current_period_end = data.get('current_period_end')
+
         subscription = Subscription.objects.filter(stripe_subscription_id=stripe_sub_id).first()
-
         if subscription:
-            subscription.status = 'payment_failed'
+            subscription.status = 'canceled' if cancel_at_period_end else 'active'
+        
+        # Convert timestamp → datetime
+        if current_period_end:
+            subscription.end_date = datetime.datetime.fromtimestamp(current_period_end)
+        
+        subscription.save()
+
+    elif event_type == 'customer.subscription.deleted':
+        stripe_sub_id = data.get('id')
+        subscription = Subscription.objects.filter(stripe_subscription_id=stripe_sub_id).first()
+        if subscription:
+            subscription.status = 'expired'
             subscription.save()
-            print(f" Payment failed for {subscription.user.email}")
 
     return HttpResponse(status=200)

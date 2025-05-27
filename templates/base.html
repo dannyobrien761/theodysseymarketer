@@ -53,21 +53,24 @@
             <div class="collapse navbar-collapse" id="navbarMain">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'core:home' %}">Home</a>
+                    <a class="nav-link" href="{% url 'core:home' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'support:contact' %}">Contact Us</a>
+                    <a class="nav-link" href="{% url 'core:how_it_works' %}">How It Works</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'support:contact' %}">Contact Us</a>
                 </li>
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
-                    Services
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item"  href="#">Dashboard</a></li>
-                    <li><a class="dropdown-item"  href="#">Pricing Plans</a></li>
-                    <li><a class="dropdown-item"  href="#">Support Center</a></li>
-                    <li><a class="dropdown-item"  href="#">Blog Insights</a></li>
-                  </ul>
+                    <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
+                        Services
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'dashboard:dashboard-home' %}">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="{% url 'subscriptions:pricing' %}">Pricing Plans</a></li>
+                        <li><a class="dropdown-item" href="#">Support Center</a></li>
+                        <li><a class="dropdown-item" href="#">Blog Insights</a></li>
+                    </ul>
                 </li>
               </ul>
       
@@ -78,7 +81,7 @@
                   <a href="{% url 'dashboard:dashboard-home' %}">Dashboard</a>
                 {% else %}
                   <a href="{% url 'account_login' %}" class="nav-link">Login</a>
-                  <a href="{% url 'account_signup' %}?plan={{ plan.id }}" class="btn btn-primary">Join & Subscribe</a>
+                  <a href="{% url 'subscriptions:pricing' %}" class="btn btn-primary">Join & Subscribe</a>
                 {% endif %}
 
               </ul>
