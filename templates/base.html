@@ -29,7 +29,6 @@
 
     <title>Marketing Agency {% block extra_title %}{% endblock %}</title>
   </head>
-  <body>
     
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
@@ -61,27 +60,24 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'support:contact' %}">Contact Us</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
-                        Services
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'dashboard:dashboard-home' %}">Dashboard</a></li>
-                        <li><a class="dropdown-item" href="{% url 'subscriptions:pricing' %}">Pricing Plans</a></li>
-                        <li><a class="dropdown-item" href="#">Support Center</a></li>
-                        <li><a class="dropdown-item" href="#">Blog Insights</a></li>
-                    </ul>
-                </li>
               </ul>
       
               <!-- Auth Buttons -->
               <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
+                <li class="nav-item">
                   <a href="{% url 'account_logout' %}" class="nav-link">Logout</a>
+                </li>
+                <li class="nav-item">
                   <a href="{% url 'dashboard:dashboard-home' %}">Dashboard</a>
+                </li>
                 {% else %}
+                <li class="nav-item">
                   <a href="{% url 'account_login' %}" class="nav-link">Login</a>
+                </li>
+                <li class="nav-item">
                   <a href="{% url 'subscriptions:pricing' %}" class="btn btn-primary">Join & Subscribe</a>
+                </li>
                 {% endif %}
 
               </ul>
