@@ -31,10 +31,12 @@ def dashboard_home(request):
 
             # Get cancel/end date info
             cancel_at = stripe_sub.get('cancel_at_period_end', False)
-            current_period_end = stripe_sub.get('current_period_end')
+            current_period_end = stripe_sub['items']['data'][0].get('current_period_end')
 
             if current_period_end:
                 end_date = datetime.datetime.fromtimestamp(current_period_end).strftime('%Y-%m-%d')
+            elif subscription.end_date:
+                end_date = subscription.end_date.strftime('%Y-%m-%d')
 
         except Exception as e:
             print(f"⚠ Error loading Stripe subscription details: {e}")
@@ -46,5 +48,9 @@ def dashboard_home(request):
         'cancel_at': cancel_at,
         'end_date': end_date,
     }
+
+    print(f"Stripe subscription object: {stripe_sub}")
+    print(f"cancel_at_period_end: {cancel_at}")
+    print(f"current_period_end: {current_period_end}")
 
     return render(request, 'dashboard/home.html', context) if subscription else redirect('subscriptions:pricing')
