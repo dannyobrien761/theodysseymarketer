@@ -1,0 +1,17 @@
+
+
+/* navbar-toggler icon*/
+.navbar-toggler {
+    padding: 0.25rem 0.5rem;
+    font-size: 2rem; /* controls icon size */
+     color: #000000;/* fallback */
+}
+
+.navbar-toggler .fa-bars {
+    color: #000000; /* icon color */
+    transition: color 0.3s ease;
+}
+
+.navbar-toggler:hover .fa-bars {s
+    color: #83C0CF; /* hover color */
+}

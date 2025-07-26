@@ -19,6 +19,11 @@
     {% endblock %}
 
     {% block extra_css %}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% endblock %}
 
     {% block corejs %}
@@ -47,8 +52,8 @@
             <a class="navbar-brand" href="{% url 'core:home' %}">
               <img src="https://d22po4pjz3o32e.cloudfront.net/logo-image.svg" alt="Logo" height="30">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
-              <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
+              <i class="fa-solid fa-bars"></i>
             </button>
       
             <div class="collapse navbar-collapse" id="navbarMain">
