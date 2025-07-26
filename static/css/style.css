@@ -12,6 +12,6 @@
     transition: color 0.3s ease;
 }
 
-.navbar-toggler:hover .fa-bars {s
+.navbar-toggler:hover .fa-bars {
     color: #83C0CF; /* hover color */
 }

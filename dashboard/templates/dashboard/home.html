@@ -21,7 +21,7 @@
 
       {% if subscription.status == 'active' %}
         <p>✅ Your subscription is active.</p>
-        <a href="{% url 'dashboard:cancel' %}" class="btn btn-danger">Cancel Subscription</a>
+        <a href="{% url 'subscriptions:cancel' %}" class="btn btn-danger">Cancel Subscription</a>
       {% elif subscription.status == 'canceled' %}
         <p>❌ You’ve canceled; your subscription will remain active until <strong>{{ end_date|default:"unknown" }}</strong>.</p>
       {% elif subscription.status == 'expired' %}

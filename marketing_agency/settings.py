@@ -27,8 +27,8 @@ env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECRET_KEY
-SECRET_KEY =  env("SECRET_KEY")
-#stripe keys
+SECRET_KEY = env("SECRET_KEY")
+# stripe keys
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY")
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET")
@@ -90,7 +90,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request', # required by allauth
+                'django.template.context_processors.request',  # required by allauth
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],

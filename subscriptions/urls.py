@@ -10,4 +10,5 @@ urlpatterns = [
     path('checkout/<uuid:plan_id>/', views.create_checkout_session, name='checkout'),
     path('webhook/', views.stripe_webhook, name='stripe-webhook'),
     path('success/', views.subscription_success, name='success'),
+    path('cancel/', views.cancel_subscription, name='cancel'),
 ]

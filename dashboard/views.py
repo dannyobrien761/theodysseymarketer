@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from subscriptions.models import Subscription
 import stripe
@@ -19,49 +18,33 @@ def dashboard_home(request):
     cancel_at = None
 
     if subscription and subscription.stripe_subscription_id:
-        stripe_sub = stripe.Subscription.retrieve(subscription.stripe_subscription_id)
-
-        # Get plan details
-        plan_obj = stripe_sub['items']['data'][0]['plan']
-        plan_id = plan_obj['id']
-        plan_nickname = plan_obj.get('nickname', 'Unnamed Plan')
-
-        # Get cancel/end date info
-        cancel_at = stripe_sub.get('cancel_at_period_end', False)
-        current_period_end = stripe_sub.get('current_period_end')
-
-        if current_period_end:
-            import datetime
-            end_date = datetime.datetime.fromtimestamp(current_period_end).strftime('%Y-%m-%d')
-
-        context = {
-            'subscription': subscription,
-            'plan_id': plan_id,
-            'plan_nickname': plan_nickname,
-            'cancel_at': cancel_at,
-            'end_date': end_date,
-        }
-
-        return render(request, 'dashboard/home.html', context)
-
-    else:
-        # No active subscription; redirect or show message
-        return redirect('subscriptions:pricing')
-
-@login_required
-def cancel_subscription(request):
-    sub = Subscription.objects.filter(user=request.user, status='active').first()
-    if sub and sub.stripe_subscription_id:
         try:
-            stripe.Subscription.modify(
-                sub.stripe_subscription_id,
-                cancel_at_period_end=True
-            )
-            sub.status = 'canceled'
-            sub.save()
-            messages.success(request, "✅ Your subscription has been marked for cancellation at the end of the billing period.")
+            stripe_sub = stripe.Subscription.retrieve(subscription.stripe_subscription_id)
+
+            # Get plan details from Stripe
+            plan_obj = stripe_sub['items']['data'][0]['plan']
+            plan_name = plan_obj.get('nickname', None)  # e.g., "Starter Plan"
+
+            # Fallback: use local SubscriptionPlan name if nickname is missing
+            if not plan_name and subscription.plan:
+                plan_name = subscription.plan.name
+
+            # Get cancel/end date info
+            cancel_at = stripe_sub.get('cancel_at_period_end', False)
+            current_period_end = stripe_sub.get('current_period_end')
+
+            if current_period_end:
+                end_date = datetime.datetime.fromtimestamp(current_period_end).strftime('%Y-%m-%d')
+
         except Exception as e:
-            messages.error(request, f"⚠ Error canceling subscription: {e}")
-    else:
-        messages.warning(request, "⚠ No active subscription found to cancel.")
-    return redirect('dashboard:dashboard-home')
+            print(f"⚠ Error loading Stripe subscription details: {e}")
+            messages.warning(request, "Could not retrieve full subscription details.")
+
+    context = {
+        'subscription': subscription,
+        'plan_name': plan_name,
+        'cancel_at': cancel_at,
+        'end_date': end_date,
+    }
+
+    return render(request, 'dashboard/home.html', context) if subscription else redirect('subscriptions:pricing')

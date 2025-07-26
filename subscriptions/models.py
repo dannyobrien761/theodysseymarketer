@@ -2,7 +2,9 @@ from django.db import models
 from django.conf import settings
 import uuid
 
+
 class SubscriptionPlan(models.Model):
+
     BILLING_CHOICES = [
         ('monthly', 'Monthly'),
         ('yearly', 'Yearly'),
@@ -36,4 +38,3 @@ class Subscription(models.Model):
 
     def __str__(self):
         return f"{self.user.email} - {self.plan.name} ({self.status})"
-    
