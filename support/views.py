@@ -3,6 +3,7 @@ from django.contrib import messages
 from .forms import ContactForm
 from django.core.mail import send_mail
 from django.conf import settings
+from .models import FAQ
 
 def contact_view(request):
     if request.method == 'POST':
@@ -27,3 +28,11 @@ def contact_view(request):
         form = ContactForm()
 
     return render(request, 'support/contact.html', {'form': form})
+
+
+def faq_list_grouped(request):
+    grouped = {
+        label: FAQ.objects.filter(category=key)
+        for key, label in FAQ.CATEGORY_CHOICES
+    }
+    return render(request, 'support/contact.html', {'grouped_faqs': grouped})

@@ -16,19 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps import Sitemap
+from .sitemaps import StaticViewSitemap
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
-
-
-class StaticViewSitemap(Sitemap):
-    priority = 1.0
-    changefreq = 'monthly'
-
-    def items(self):
-        return ['core:home', 'core:how_it_works', 'subscriptions:pricing', 'support:contact']
-
-    def location(self, item):
-        return reverse(item)
 
 sitemaps = {
     'static': StaticViewSitemap,
@@ -44,6 +34,6 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('payments/', include('payments.urls')),
     path('support/', include('support.urls')),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
 ]

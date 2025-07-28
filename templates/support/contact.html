@@ -19,4 +19,55 @@
     <button type="submit" class="btn btn-primary">Send Message</button>
   </form>
 </div>
+
+
+<div class="container my-5">
+  <h2>Frequently Asked Questions</h2>
+  
+  {% for category, faqs in grouped_faqs.items %}
+    <div class="card my-4">
+      <div class="card-header" id="heading-category-{{ forloop.counter }}">
+        <h5 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse"
+                  data-target="#category-{{ forloop.counter }}"
+                  aria-expanded="false" aria-controls="category-{{ forloop.counter }}">
+            {{ category }}
+          </button>
+        </h5>
+      </div>
+
+      <div id="category-{{ forloop.counter }}" class="collapse" aria-labelledby="heading-category-{{ forloop.counter }}">
+        <div class="card-body">
+
+          <div class="accordion" id="accordion-{{ forloop.counter }}">
+            {% for faq in faqs %}
+              <div class="card">
+                <div class="card-header" id="heading-faq-{{ faq.id }}">
+                  <h6 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button"
+                            data-toggle="collapse"
+                            data-target="#collapse-faq-{{ faq.id }}"
+                            aria-expanded="false"
+                            aria-controls="collapse-faq-{{ faq.id }}">
+                      {{ faq.question }}
+                    </button>
+                  </h6>
+                </div>
+                <div id="collapse-faq-{{ faq.id }}"
+                     class="collapse"
+                     aria-labelledby="heading-faq-{{ faq.id }}"
+                     data-parent="#accordion-{{ forloop.parentloop.counter }}">
+                  <div class="card-body">
+                    {{ faq.answer|linebreaks }}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
 {% endblock %}
