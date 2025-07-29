@@ -27,12 +27,12 @@ def contact_view(request):
     else:
         form = ContactForm()
 
-    return render(request, 'support/contact.html', {'form': form})
-
-
-def faq_list_grouped(request):
     grouped = {
         label: FAQ.objects.filter(category=key)
         for key, label in FAQ.CATEGORY_CHOICES
     }
-    return render(request, 'support/contact.html', {'grouped_faqs': grouped})
+
+    return render(request, 'support/contact.html', {
+        'form': form,
+        'grouped_faqs': grouped,
+    })
