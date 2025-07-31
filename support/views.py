@@ -5,28 +5,22 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .models import FAQ
 
+
 def contact_view(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            message = form.cleaned_data['message']
+    form = ContactForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        name = form.cleaned_data['name']
+        email = form.cleaned_data['email']
+        reason = form.cleaned_data['reason']
+        message = form.cleaned_data['message']
 
-            # Send email (simplest)
-            send_mail(
-                subject=f"Contact Form Submission from {name}",
-                message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.DEFAULT_FROM_EMAIL],
-                fail_silently=False,
-            )
+        subject = f"New Contact Form Submission: {reason}"
+        body = f"From: {name} <{email}>\n\nReason: {reason}\n\nMessage:\n{message}"
 
-            messages.success(request, 'Your message has been sent! We’ll get back to you soon.')
-            return redirect('support:contact')
-    else:
-        form = ContactForm()
+        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [settings.DEFAULT_FROM_EMAIL])
 
+        messages.success(request, 'Your message has been sent! We’ll get back to you soon.')
+        return redirect('support:contact')
     grouped = {
         label: FAQ.objects.filter(category=key)
         for key, label in FAQ.CATEGORY_CHOICES

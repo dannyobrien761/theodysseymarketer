@@ -3,37 +3,48 @@
 {% block title %}Contact Us{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-8">
+<section class="container-fluid py-5">
+  <div class="row bg-color-contact">
+    <div class="col-12 text-center mb-4">
+      <h3 class="contact-heading uppercase">Contact Us</h3>
+      <h5 class="uppercase">Get in contact with us about booking a free consultation, or any queries relating to our business model. </h5>
+    </div>
 
-    <h2 class="text-center">Contact Us</h2>
-        <p class="lead text-center mb-4">
+    <div class="col-md-6 offset-md-3">
+      <form method="post" class="p-4 shadow bg-white rounded">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
 
-          Get in contact with us about booking a free consultation, or any queries relating to our business model. 
+        <div class="form-group mb-3">
+          {{ form.name.label_tag }}
+          {{ form.name }}
+          {{ form.name.errors }}
+        </div>
 
-          We're happy to help!
+        <div class="form-group mb-3">
+          {{ form.email.label_tag }}
+          {{ form.email }}
+          {{ form.email.errors }}
+        </div>
 
-        </p>
+        <div class="form-group mb-3">
+          {{ form.reason.label_tag }}
+          {{ form.reason }}
+          {{ form.reason.errors }}
+        </div>
 
-  {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-success text-center">{{ message }}</div>
-    {% endfor %}
-  {% endif %}
-    
-  <div class="d-flex justify-content-center">
-    <form method="post" class="bg-light p-4 rounded shadow-sm">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary px-4">Send Message</button>
-      </div>
-    </form>
-  </div>
+        <div class="form-group mb-4">
+          {{ form.message.label_tag }}
+          {{ form.message }}
+          {{ form.message.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-secondary w-100">Send Message</button>
+      </form>
     </div>
   </div>
-</div>
+</section>
+
 
 
 <div class="container my-5">
