@@ -38,6 +38,10 @@ def dashboard_home(request):
             elif subscription.end_date:
                 end_date = subscription.end_date.strftime('%Y-%m-%d')
 
+            print(f"Stripe subscription object: {stripe_sub}")
+            print(f"cancel_at_period_end: {cancel_at}")
+            print(f"current_period_end: {current_period_end}")
+            
         except Exception as e:
             print(f"⚠ Error loading Stripe subscription details: {e}")
             messages.warning(request, "Could not retrieve full subscription details.")
@@ -49,8 +53,6 @@ def dashboard_home(request):
         'end_date': end_date,
     }
 
-    print(f"Stripe subscription object: {stripe_sub}")
-    print(f"cancel_at_period_end: {cancel_at}")
-    print(f"current_period_end: {current_period_end}")
+    
 
     return render(request, 'dashboard/home.html', context) if subscription else redirect('subscriptions:pricing')

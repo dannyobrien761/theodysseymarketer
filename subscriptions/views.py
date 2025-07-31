@@ -142,3 +142,26 @@ def cancel_subscription(request):
     else:
         messages.warning(request, "⚠ No active subscription found to cancel.")
     return redirect('dashboard:dashboard-home')
+
+
+@login_required
+def billing_portal(request):
+    subscription = Subscription.objects.filter(user=request.user).first()
+    if not subscription:
+        # fallback redirect if no active subscription
+        return redirect('subscriptions:pricing')
+
+    try:
+        # Retrieve the Stripe customer via the subscription
+        stripe_sub = stripe.Subscription.retrieve(subscription.stripe_subscription_id)
+        customer_id = stripe_sub.customer
+
+        session = stripe.billing_portal.Session.create(
+            customer=customer_id,
+            return_url=request.build_absolute_uri('/dashboard/'),
+        )
+        return redirect(session.url)
+    except Exception as e:
+        # Optionally add logging or user feedback
+        print(f"⚠ Error creating billing portal session: {e}")
+        return redirect('dashboard:dashboard-home')
