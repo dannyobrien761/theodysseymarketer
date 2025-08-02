@@ -4,9 +4,6 @@ from django.http import HttpResponse
 def home(request):
     return render(request, 'core/home.html')
 
-def how_it_works(request):
-    return render(request, 'core/how_it_works.html')
-
 def robots_txt(request):
     lines = [
         "User-agent: *",

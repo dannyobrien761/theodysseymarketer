@@ -9,4 +9,56 @@
     <p class="lead">Empowering businesses through chatbots, web design, and social media content.</p>
     <a href="{% url 'subscriptions:pricing' %}" class="btn btn-primary btn-lg mt-3">View Pricing</a>
   </div>
+
+  <section class="container my-5">
+  <h2 class="text-center mb-4">Breakdown of Services Provided</h2>
+
+  <div class="row justify-content-center">
+    <!-- AI Chatbot Services -->
+    <div class="col-md-6 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h4 class="card-title text-primary">AI Chatbot Services</h4>
+          <ul class="list-unstyled">
+            <li>• Custom chatbot tailored to your business needs</li>
+            <li>• Integrated with your website’s existing FAQ</li>
+            <li>• Full FAQ feature development if needed</li>
+            <li>• 24/7 automated customer support</li>
+            <li>• Ongoing updates, improvements, and chatbot maintenance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Communication Services -->
+    <div class="col-md-6 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h4 class="card-title text-success">Business Communication Services</h4>
+          <ul class="list-unstyled">
+            <li>• Social media management (Instagram, Facebook, LinkedIn, etc.)</li>
+            <li>• Video editing for promotional or explainer content</li>
+            <li>• Consistent brand communication across platforms</li>
+            <li>• Strategic content planning and scheduling</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container my-5 text-center">
+  <div class="mx-auto" style="max-width: 700px;">
+    <h2 class="mb-4">How Our Subscription Works</h2>
+    <ul class="list-unstyled text-left">
+      <li><i class="fa-regular fa-rectangle-list"></i> Get in contact for a consultation</li>
+      <li><i class="fa-regular fa-map"></i> Choose a subscription plan that suits your business</li>
+      <li><i class="fa-solid fa-address-card"></i> Create an account</li>
+      <li><i class="fa-regular fa-circle-check"></i> Access your personal dashboard</li>
+      <li><i class="fa-regular fa-hand"></i> Cancel or switch plans anytime from your dashboard</li>
+    </ul>
+    <a href="{% url 'subscriptions:pricing' %}" class="btn btn-primary mt-4">View Plans</a>
+  </div>
+</section>
+
 {% endblock %}
