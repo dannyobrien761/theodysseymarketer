@@ -3,13 +3,13 @@
 
 {% block content %}
 <div class="container mt-5">
-  <h2>Welcome, {{ user.first_name|default:user.username }}</h2>
+  <h2 class="mb-4 text-center">Welcome, {{ user.first_name|default:user.username }}</h2>
 
   {% if subscription %}
-    <div class="card mt-4">
+    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
       <div class="card-body">
-        <h5 class="card-title">Your Plan: {{ plan_name|default:"Unknown Plan" }}</h5>
-        <p>Status: 
+        <h5 class="card-title"><strong>Your Plan:</strong> {{ plan_name|default:"Unknown Plan" }}</h5>
+        <p><strong> Status: </strong>
          {% if subscription.status == 'active' %}
           <span class="badge badge-success">Active</span>
          {% elif subscription.status == 'canceled' %}
@@ -29,7 +29,7 @@
       {% endif %}
 
       <hr>
-      <p>Stripe Subscription ID: {{ subscription.stripe_subscription_id }}</p>
+      <p class="text-muted"><small></small>>Stripe Subscription ID: {{ subscription.stripe_subscription_id }}</p>
       </div>
     </div>
   {% else %}
@@ -38,9 +38,22 @@
   {% endif %}
 </div>
 
-<section>
-  <div>
-    <a href="{% url 'subscriptions:billing-portal' %}" class="btn btn-primary">Manage Billing</a>
+<section class="container mt-5">
+  <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+    <div class="card-body text-center">
+      <h5 class="card-title">Manage Your Billing</h5>
+      <p class="card-text">
+        Access your secure billing portal to:
+        <ul class="text-left mt-3">
+          <li>🔁 Update your subscription plan</li>
+          <li>💳 Change or update your payment method</li>
+          <li>📄 View and download past invoices</li>
+          <li>📬 Update billing address and contact info</li>
+          <li>❌ Cancel your subscription</li>
+        </ul>
+      </p>
+      <a href="{% url 'subscriptions:billing-portal' %}" class="btn btn-primary mt-3">Open Billing Portal</a>
+    </div>
   </div>
 </section>
 {% endblock %}
