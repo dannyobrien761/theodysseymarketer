@@ -4,7 +4,7 @@ body {
   background-image: url('/static/images/bg-darker-green.png');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center center;
+  /*background-position: center center;*/
 }
 
 /* navbar-toggler icon*/
@@ -58,9 +58,13 @@ h1, h2, h3, h4, h5 {
 
 /* Accent Text Colors */
 .text-primary {
-  color: #713A4A !important;
+  color: #fff !important;
+  font-weight: bold;
 }
 
+.lead{
+color: #DB9E45
+}
 /* Section Padding */
 section {
   padding: 40px 0;
