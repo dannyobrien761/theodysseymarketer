@@ -1,4 +1,11 @@
 
+/*bg*/
+body {
+  background-image: url('/static/images/bg-darker-green.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
 
 /* navbar-toggler icon*/
 .navbar-toggler {
@@ -14,4 +21,52 @@
 
 .navbar-toggler:hover .fa-bars {
     color: #83C0CF; /* hover color */
+}
+
+
+/* Headings */
+h1, h2, h3, h4, h5 {
+  color: white;
+}
+
+/* Cards */
+.card-glass {
+  background-color: rgba(255, 255, 255, 0.1); /* transparent white */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+} 
+
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #D3724F;
+  border: none;
+}
+.btn-primary:hover {
+  background-color: #DB9E45;
+  color: #053C26;
+}
+
+/* Accent Text Colors */
+.text-primary {
+  color: #713A4A !important;
+}
+
+/* Section Padding */
+section {
+  padding: 40px 0;
+}
+
+/* Icons spacing */
+ul.list-unstyled li {
+  margin-bottom: 10px;
 }
