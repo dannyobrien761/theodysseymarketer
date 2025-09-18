@@ -185,15 +185,27 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if 'DEVELOPMENT' in os.environ:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    DEFAULT_FROM_EMAIL = 'opsteam@customexcelconsulting.com'
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = '127.0.0.1'
-    EMAIL_PORT = 1025
-    EMAIL_USE_TLS = False
-    EMAIL_USE_SSL = False
-    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
-    DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+
+# Email via SendGrid
+if os.environ.get("DEVELOPMENT"):  # local dev
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    DEFAULT_FROM_EMAIL = "opsteam@customexcelconsulting.com"
+else:  # production (Heroku)
+    EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+    SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+    DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
+
+
+
+#if 'DEVELOPMENT' in os.environ:
+ #   EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+  #  DEFAULT_FROM_EMAIL = 'opsteam@customexcelconsulting.com'
+#else:
+ #   EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+  #  EMAIL_HOST = '127.0.0.1'
+   # EMAIL_PORT = 1025
+    #EMAIL_USE_TLS = False
+    #EMAIL_USE_SSL = False
+    #EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    #EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
+    #DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
