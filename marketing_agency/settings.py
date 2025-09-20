@@ -186,14 +186,18 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Email via SendGrid
-if os.environ.get("DEVELOPMENT"):  # local dev
+# Default sender for all emails
+DEFAULT_FROM_EMAIL = os.environ.get(
+    "DEFAULT_FROM_EMAIL",
+    "danny@impulsivemarketing.ie"  # fallback if env not set
+)
+
+# SendGrid API Key (used by utils/send_email.py)
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+
+# Development only (emails show in console instead of sending)
+if os.environ.get("DEVELOPMENT"):
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-    DEFAULT_FROM_EMAIL = "opsteam@customexcelconsulting.com"
-else:  # production (Heroku)
-    EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-    SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
-    DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 
 
