@@ -2,7 +2,9 @@
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def send_email(subject, to_email, html_content, from_email=None):
     """
@@ -25,9 +27,12 @@ def send_email(subject, to_email, html_content, from_email=None):
 
     try:
         sg = SendGridAPIClient(os.environ.get("SENDGRID_API_KEY"))
+       # sg.set_sendgrid_data_residency("eu")
         response = sg.send(message)
+        print(response.body)
+        print(response.headers)
         return response.status_code  # 202 means success
     except Exception as e:
         # Log or raise for debugging
-        print(f"SendGrid Error: {e}")
+        print("SendGrid Error:", e)
         return None

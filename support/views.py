@@ -4,7 +4,10 @@ from .forms import ContactForm
 from django.conf import settings
 from .models import FAQ
 from utils.send_email import send_email
+from dotenv import load_dotenv
 
+
+load_dotenv()
 
 def contact_view(request):
     form = ContactForm(request.POST or None)
