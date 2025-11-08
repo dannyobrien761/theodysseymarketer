@@ -1,0 +1,6 @@
+<!-- templates/partials/footer.html -->
+<form method="POST" action="{% url 'newsletter_signup' %}" class="newsletter-form">
+  {% csrf_token %}
+  <input type="email" name="email" placeholder="Join our newsletter" required>
+  <button type="submit">Subscribe</button>
+</form>

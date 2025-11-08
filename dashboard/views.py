@@ -41,7 +41,7 @@ def dashboard_home(request):
             print(f"Stripe subscription object: {stripe_sub}")
             print(f"cancel_at_period_end: {cancel_at}")
             print(f"current_period_end: {current_period_end}")
-            
+
         except Exception as e:
             print(f"⚠ Error loading Stripe subscription details: {e}")
             messages.warning(request, "Could not retrieve full subscription details.")
@@ -52,7 +52,5 @@ def dashboard_home(request):
         'cancel_at': cancel_at,
         'end_date': end_date,
     }
-
-    
 
     return render(request, 'dashboard/home.html', context) if subscription else redirect('subscriptions:pricing')

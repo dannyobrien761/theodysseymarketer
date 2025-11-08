@@ -1,0 +1,13 @@
+<!-- templates/newsletter/signup.html -->
+{% load static %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert {{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+
+<form method="POST" action="{% url 'newsletter_signup' %}">
+  {% csrf_token %}
+  {{ form.email }}
+  <button type="submit" class="btn btn-primary mt-2">Subscribe</button>
+</form>
