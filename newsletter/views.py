@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import NewsletterForm
-from utils.sendmail import send_email  # ← reuse your SendGrid helper
+from utils.send_email import send_email  # ← reuse your SendGrid helper
 
 def newsletter_signup(request):
     if request.method == 'POST':
