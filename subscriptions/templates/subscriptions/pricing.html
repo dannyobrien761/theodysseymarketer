@@ -17,10 +17,8 @@
             <li>{{ key }}</li>
             {% endfor %}
           </ul>
-          {% if user.is_authenticated %}
-          <a href="{% url 'subscriptions:checkout' plan.id %}" class="btn btn-success">Subscribe</a>
-          {% else %}
-          <a href="{% url 'account_signup' %}" class="btn btn-primary">Join & Subscribe</a>
+          {% if not user.is_authenticated %}
+           <a href="{% url 'account_signup' %}" class="btn btn-primary w-100">Create Account to Subscribe</a>
           {% endif %}
         </div>
       </div>

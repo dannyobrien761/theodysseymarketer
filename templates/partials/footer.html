@@ -1,6 +1,13 @@
+{% load static %}
+
 <!-- templates/partials/footer.html -->
-<form method="POST" action="{% url 'newsletter_signup' %}" class="newsletter-form">
-  {% csrf_token %}
-  <input type="email" name="email" placeholder="Join our newsletter" required>
-  <button type="submit">Subscribe</button>
-</form>
+<div class="footer-content container text-center">
+  <h3>Join Our Newsletter</h3>
+  <p>Subscribe for insights, strategies, and growth tips straight to your inbox.</p>
+
+  <form method="POST" action="{% url 'newsletter_signup' %}" class="newsletter-form">
+    {% csrf_token %}
+    <input type="email" name="email" placeholder="Join our newsletter" required>
+    <button type="submit" class="newsletter-btn">Subscribe</button>
+  </form>
+</div>

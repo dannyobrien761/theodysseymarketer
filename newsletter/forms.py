@@ -8,7 +8,7 @@ class NewsletterForm(forms.ModelForm):
         fields = ['email']
         widgets = {
             'email': forms.EmailInput(attrs={
-                'class': 'form-control',
+                'class': 'newsletter-input',
                 'placeholder': 'Enter your email',
                 'required': True,
             }),

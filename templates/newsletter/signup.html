@@ -1,13 +1,27 @@
 <!-- templates/newsletter/signup.html -->
 {% load static %}
-{% if messages %}
-  {% for message in messages %}
-    <div class="alert {{ message.tags }}">{{ message }}</div>
-  {% endfor %}
-{% endif %}
 
-<form method="POST" action="{% url 'newsletter_signup' %}">
-  {% csrf_token %}
-  {{ form.email }}
-  <button type="submit" class="btn btn-primary mt-2">Subscribe</button>
-</form>
+<div class="newsletter-signup container text-center mt-5">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} newsletter-alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <h2 class="newsletter-title">Join Our Newsletter</h2>
+  <p class="newsletter-text">Subscribe to receive growth tips, insights, and SaaS updates straight to your inbox.</p>
+
+  <form method="POST" action="{% url 'newsletter_signup' %}" class="newsletter-form mt-3">
+    {% csrf_token %}
+    <input 
+      type="email" 
+      name="email" 
+      class="newsletter-input" 
+      placeholder="Enter your email address" 
+      required
+    >
+    <button type="submit" class="newsletter-btn">Subscribe</button>
+  </form>
+</div>

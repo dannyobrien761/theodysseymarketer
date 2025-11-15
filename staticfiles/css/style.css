@@ -74,3 +74,78 @@ section {
 ul.list-unstyled li {
   margin-bottom: 10px;
 }
+
+
+/* ===== Footer Styling ===== */
+.site-footer {
+  background: #83C0CF; /* brand background */
+  color: #fff;
+  padding: 3rem 1rem;
+  border-top: 3px solid #D2C0A7; /* brand accent */
+}
+
+.site-footer h3 {
+  color: #D2C0A7;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.site-footer p {
+  color: #f8f9fa;
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+}
+
+/* Newsletter Form */
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.newsletter-input {
+  padding: 0.7rem 1rem;
+  border-radius: 2rem;
+  border: 2px solid #D2C0A7;
+  outline: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  font-size: 1rem;
+  min-width: 250px;
+  transition: all 0.3s ease;
+}
+
+.newsletter-input:focus {
+  border-color: #098D8A;
+  box-shadow: 0 0 5px rgba(9, 141, 138, 0.5);
+}
+
+/* Submit Button */
+.newsletter-btn {
+  background-color: #098D8A;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 5px; /* your request */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(9, 141, 138, 0.3);
+}
+
+.newsletter-btn:hover {
+  background-color: #D2C0A7;
+  color: #083A3A;
+  box-shadow: 0 6px 15px rgba(210, 192, 167, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Copyright */
+.site-footer p.mb-0 {
+  color: #f1f1f1;
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
+}
