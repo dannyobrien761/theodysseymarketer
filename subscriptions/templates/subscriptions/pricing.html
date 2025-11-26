@@ -8,6 +8,7 @@
     {% for plan in plans %}
     <div class="col-md-4 mb-4">
       <div class="card h-100">
+
         <div class="card-body">
           <h4 class="card-title">{{ plan.name }}</h4>
           <h5 class="card-subtitle text-muted">{{ plan.billing_cycle|capfirst }}</h5>
@@ -19,6 +20,26 @@
           </ul>
           {% if not user.is_authenticated %}
            <a href="{% url 'account_signup' %}" class="btn btn-primary w-100">Create Account to Subscribe</a>
+          {% elif user_subscription %}
+                {% if user_subscription.plan.id == plan.id %}
+                    <!-- User is already on this plan -->
+                    <button class="btn btn-secondary w-100" disabled>Current Plan</button>
+                    <a href="{% url 'subscriptions:billing-portal' %}" class="btn btn-outline-primary w-100 mt-2">
+                        Manage Subscription
+                    </a>
+                {% else %}
+                    <!-- User has subscription, but a different plan -->
+                    <button class="btn btn-secondary w-100" disabled>Not Available — Already Subscribed</button>
+                    <a href="{% url 'subscriptions:billing-portal' %}" class="btn btn-outline-primary w-100 mt-2">
+                        Change Plan in Billing Portal
+                    </a>
+                {% endif %}
+
+            {% else %}
+                <!-- Logged in + no subscription -->
+                <a href="{% url 'subscriptions:checkout' plan.id %}" class="btn btn-success w-100">
+                    Subscribe
+                </a>
           {% endif %}
         </div>
       </div>

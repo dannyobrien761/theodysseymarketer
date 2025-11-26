@@ -22,7 +22,15 @@ def subscription_success(request):
 
 def pricing_view(request):
     plans = SubscriptionPlan.objects.all()
-    return render(request, 'subscriptions/pricing.html', {'plans': plans})
+
+    user_subscription = None
+    if request.user.is_authenticated:
+        user_subscription = Subscription.objects.filter(
+            user=request.user, status='active'
+        ).first()
+
+    return render(request, 'subscriptions/pricing.html', {'plans': plans,
+                  'user_subscription': user_subscription})
 
 
 @login_required
