@@ -5,7 +5,11 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   /*background-position: center center;*/
+  min-height: 100vh; display: flex; flex-direction: column;
+
 }
+
+
 
 /* navbar-toggler icon*/
 .navbar-toggler {
@@ -73,4 +77,93 @@ section {
 /* Icons spacing */
 ul.list-unstyled li {
   margin-bottom: 10px;
+}
+
+
+/* =====Footer Styling (Updated) ===== */
+
+
+.site-footer {
+  background: rgba(255, 255, 255, 0.08); /* very subtle transparency */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ffffff;
+  padding: 3rem 1.5rem;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.2); /* soft glass border */
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Footer Headings */
+.site-footer h3 {
+  color: #D2C0A7; /* your brand beige */
+  font-size: 1.5rem;
+  margin-bottom: 0.7rem;
+}
+
+/* Footer Text + Links */
+.site-footer p,
+.site-footer li,
+.site-footer a {
+  color: #f1f1f1;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.site-footer a {
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.site-footer a:hover {
+  color: #DB9E45; /* your orange accent */
+}
+
+/* List spacing */
+.site-footer ul li {
+  margin-bottom: 0.6rem;
+}
+
+/* Newsletter Input */
+.newsletter-input {
+  padding: 0.7rem 1rem;
+  border-radius: 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.85);
+  color: #333;
+  min-width: 260px;
+  transition: 0.3s ease;
+}
+
+.newsletter-input:focus {
+  border-color: #D2C0A7;
+  box-shadow: 0 0 8px rgba(210, 192, 167, 0.35);
+}
+
+/* Newsletter Button */
+.newsletter-btn {
+  background-color: #D3724F; /* your warm orange */
+  color: #fff;
+  padding: 0.7rem 1.6rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.newsletter-btn:hover {
+  background-color: #DB9E45;
+  color: #053C26;
+  transform: translateY(-2px);
+}
+
+/* Bottom copyright */
+.footer-bottom {
+  margin-top: 2rem;
+  text-align: center;
+  color: #f1f1f1;
+  opacity: 0.85;
+  font-size: 0.9rem;
 }
