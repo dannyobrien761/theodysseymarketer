@@ -1,15 +1,29 @@
 
+* { outline: 1px dashed rgba(255,0,0,0.2); }
+
 /*bg*/
+html, body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
 body {
+  display: flex; 
+  flex-direction: column;
+  min-height: 100vh; 
+  
+ /* 
   background-image: url('/static/images/bg-darker-green.png');
   background-size: cover;
   background-repeat: no-repeat;
-  /*background-position: center center;*/
-  min-height: 100vh; display: flex; flex-direction: column;
-
+  background-position: center center;
+  background-attachment: fixed; /*mobile safe */
 }
 
-
+main {
+    flex: 1 0 auto;
+}
 
 /* navbar-toggler icon*/
 .navbar-toggler {
@@ -80,7 +94,7 @@ ul.list-unstyled li {
 }
 
 
-/* =====Footer Styling (Updated) ===== */
+/* =====Footer Styling ===== */
 
 
 .site-footer {
@@ -96,8 +110,8 @@ ul.list-unstyled li {
 
 /* Footer Headings */
 .site-footer h3 {
-  color: #D2C0A7; /* your brand beige */
-  font-size: 1.5rem;
+  color: #ffffff; /* your brand beige */
+  font-size: 1.7rem;
   margin-bottom: 0.7rem;
 }
 
@@ -167,3 +181,45 @@ ul.list-unstyled li {
   opacity: 0.85;
   font-size: 0.9rem;
 }
+
+
+/*responsive
+
+@media (max-width: 768px) {
+    body {
+        background-attachment: scroll; /* mobile safe 
+        background-size: cover;
+    }
+}
+
+*/
+
+/* Keep the image on large screens (≥ 769 px) */
+@media (min-width: 769px) {
+    body {
+        background-image: url('/static/images/bg-darker-green.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;      
+    }
+}
+
+/* Small‑screen fallback (≤ 768 px) */
+@media (max-width: 768px) {
+    body {
+        background-image: none;
+        background-color: #0a2e1c;   /* deep forest‑green */
+
+        /* keep the rest of the background properties for consistency */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: scroll;   /* safe on all devices */
+    }
+
+    .site-footer {
+        background: rgba(0, 0, 0, 0.25); 
+    }
+}
+

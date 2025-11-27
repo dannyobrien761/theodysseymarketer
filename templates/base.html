@@ -91,13 +91,15 @@
         </nav>
       
         <!-- Main Content -->
-        <main class="py-4 container">
-          {% block content %}
-          {% endblock %}
+        <main class="py-4 flex-grow-1">
+          <div class="container">
+            {% block content %}
+            {% endblock %}
+          </div>
         </main>
       
         <!-- Footer (optional) -->
-        <footer class="site-footer text-center text-muted py-4 border-top mt-4">
+        <footer class="site-footer text-center text-muted py-4 border-top">
         {% include 'partials/footer.html' %}
           <div class="container">
             <p class="mb-0">&copy; {{ year }} Marketing SaaS. All rights reserved.</p>
