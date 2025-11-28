@@ -1,6 +1,4 @@
 
-* { outline: 1px dashed rgba(255,0,0,0.2); }
-
 /*bg*/
 html, body {
     min-height: 100vh;
@@ -213,8 +211,6 @@ ul.list-unstyled li {
     background:#DB9E45; color:#053C26;
 }
 
-
-/* 1️⃣ Center the wrapper itself */
 .signup-wrapper {
     display: flex;
     flex-direction: column;
@@ -237,20 +233,7 @@ main .container {
     min-height: 80vh;          
 }
 
-/*
-.signup-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;       /* horizontal centre 
-    justify-content: center;
-    background: rgba(0,0,0,0.25);  
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-}
-*/
+
 
 /* Keep the image on large screens (≥ 769 px) */
 @media (min-width: 769px) {
