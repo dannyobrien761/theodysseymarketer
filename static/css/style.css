@@ -183,15 +183,73 @@ ul.list-unstyled li {
 }
 
 
-/*responsive
-
-@media (max-width: 768px) {
-    body {
-        background-attachment: scroll; /* mobile safe 
-        background-size: cover;
-    }
+/* sign up .html */
+.signup-wrapper form label { color:#f1f1f1; font-weight:600; margin-bottom:.25rem; display:block; }
+.signup-wrapper form input,
+.signup-wrapper form textarea,
+.signup-wrapper form select {
+    background:rgba(255,255,255,.15);
+    color:#fff;
+    border:1px solid rgba(255,255,255,.3);
+    border-radius:.4rem;
+    padding:.55rem .9rem;
+    width:100%;
+    box-sizing:border-box;
+}
+.signup-wrapper form input:focus,
+.signup-wrapper form textarea:focus,
+.signup-wrapper form select:focus {
+    border-color:#DB9E45;
+    box-shadow:0 0 6px rgba(219,158,69,.5);
+    outline:none;
+}
+.signup-wrapper ::placeholder { color:#dcdcdc; opacity:1; }
+.signup-wrapper form button[type="submit"],
+.signup-wrapper form button.btn-primary {
+    background:#D3724F; border:none; width:100%; margin-top:1rem;
+}
+.signup-wrapper form button[type="submit"]:hover,
+.signup-wrapper form button.btn-primary:hover {
+    background:#DB9E45; color:#053C26;
 }
 
+
+/* 1️⃣ Center the wrapper itself */
+.signup-wrapper {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0,0,0,0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    max-width: 470px;          
+    width: 100%;              
+    margin: 3rem auto 0 auto;  
+}
+
+main .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;       /* horizontal centre */
+    justify-content: center;   /* vertical centre */
+    min-height: 80vh;          
+}
+
+/*
+.signup-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;       /* horizontal centre 
+    justify-content: center;
+    background: rgba(0,0,0,0.25);  
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
 */
 
 /* Keep the image on large screens (≥ 769 px) */
