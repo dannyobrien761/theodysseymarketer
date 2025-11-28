@@ -37,7 +37,7 @@ STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1',
                  'localhost',
@@ -190,7 +190,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Default sender for all emails
 DEFAULT_FROM_EMAIL = os.environ.get(
     "DEFAULT_FROM_EMAIL",
-    "danny@impulsivemarketing.ie"  # fallback if env not set
 )
 
 # SendGrid API Key (used by utils/send_email.py)
@@ -201,16 +200,3 @@ if os.environ.get("DEVELOPMENT"):
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
-
-#if 'DEVELOPMENT' in os.environ:
- #   EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-  #  DEFAULT_FROM_EMAIL = 'opsteam@customexcelconsulting.com'
-#else:
- #   EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-  #  EMAIL_HOST = '127.0.0.1'
-   # EMAIL_PORT = 1025
-    #EMAIL_USE_TLS = False
-    #EMAIL_USE_SSL = False
-    #EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-    #EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
-    #DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
